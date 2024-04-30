@@ -1,5 +1,10 @@
 import { Request, Response, NextFunction, RequestHandler } from 'express';
-import { check, validationResult, ValidationChain } from 'express-validator';
+import {
+  check,
+  validationResult,
+  ValidationChain,
+  body,
+} from 'express-validator';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 
 //adds userId to the request type
@@ -64,3 +69,27 @@ export const verifyTokenMiddleware = (
     return res.status(401).json({ message: 'unauthorized' });
   }
 };
+
+export const validateHotelUser: MiddlewareSequence = [
+  body('name').notEmpty().withMessage('Name is required'),
+  body('city').notEmpty().withMessage('City is required'),
+  body('country').notEmpty().withMessage('Country is required'),
+  body('description').notEmpty().withMessage('Description is required'),
+  body('type').notEmpty().withMessage('Hotel type is required'),
+  body('pricePerNight')
+    .notEmpty()
+    .withMessage('Price per night is required')
+    .isNumeric()
+    .withMessage('Price per night must be a number'),
+  body('facilities')
+    .notEmpty()
+    .isArray()
+    .withMessage('Facilities are required'),
+  (req: Request, res: Response, next: NextFunction) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ message: errors.array() });
+    }
+    next();
+  },
+];
