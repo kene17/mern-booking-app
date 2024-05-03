@@ -83,10 +83,13 @@ export const validateHotelUser: MiddlewareSequence = [
     .withMessage('Price per night must be a number'),
   body('facilities')
     .notEmpty()
+    .withMessage('Facilities are required')
     .isArray()
     .withMessage('Facilities are required'),
   (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
+    console.log('Validation Errors:', errors.array());
+
     if (!errors.isEmpty()) {
       return res.status(400).json({ message: errors.array() });
     }

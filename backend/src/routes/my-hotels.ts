@@ -15,8 +15,8 @@ const upload = multer({
 router.post(
   '/',
   verifyTokenMiddleware,
-  validateHotelUser,
   upload.array('imageFiles', 6),
+  validateHotelUser,
   hotelController.createHotel
 );
 

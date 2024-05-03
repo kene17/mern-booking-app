@@ -16,9 +16,17 @@ const createHotel = async (req: Request, res: Response) => {
       return res.url;
     });
     const imageUrls = await Promise.all(uploadPromises);
+    const starRating = Number(req.body.starRating);
+
+    if (isNaN(starRating) || starRating < 1 || starRating > 5) {
+      return res.status(400).json({
+        message: 'Invalid star rating. Must be a number between 1 and 5.',
+      });
+    }
 
     //if the upload was successful, add the urls to the new hotel
     newHotel.imageUrls = imageUrls;
+    newHotel.starRating = starRating;
     newHotel.lastUpdated = new Date();
     newHotel.userId = req.userId;
 
