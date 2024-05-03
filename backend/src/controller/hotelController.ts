@@ -40,4 +40,13 @@ const createHotel = async (req: Request, res: Response) => {
   }
 };
 
-export default { createHotel };
+const getAllUserHotels = async (req: Request, res: Response) => {
+  try {
+    const hotels = await Hotel.find({ userId: req.userId });
+    res.json(hotels);
+  } catch (error) {
+    res.status(500).json({ messahe: 'Error fetching hotels' });
+  }
+};
+
+export default { createHotel, getAllUserHotels };
