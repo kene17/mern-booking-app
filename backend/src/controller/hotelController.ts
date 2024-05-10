@@ -40,7 +40,7 @@ const createHotel = async (req: Request, res: Response) => {
   }
 };
 
-const getAllUserHotels = async (req: Request, res: Response) => {
+const getCurrentUsersHotels = async (req: Request, res: Response) => {
   try {
     const hotels = await Hotel.find({ userId: req.userId });
     res.json(hotels);
@@ -49,4 +49,4 @@ const getAllUserHotels = async (req: Request, res: Response) => {
   }
 };
 
-export default { createHotel, getAllUserHotels };
+export default { createHotel, getCurrentUsersHotels };

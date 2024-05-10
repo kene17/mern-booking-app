@@ -20,6 +20,6 @@ router.post(
   hotelController.createHotel
 );
 
-router.get('/', verifyTokenMiddleware, hotelController.getAllUserHotels);
+router.get('/', verifyTokenMiddleware, hotelController.getCurrentUsersHotels);
 
 export default router;
