@@ -21,5 +21,12 @@ router.post(
 );
 
 router.get('/', verifyTokenMiddleware, hotelController.getCurrentUsersHotels);
+router.get('/:id', verifyTokenMiddleware, hotelController.editHotel);
+router.put(
+  '/:hotelId',
+  verifyTokenMiddleware,
+  upload.array('imageFiles'),
+  hotelController.updateHotel
+);
 
 export default router;
