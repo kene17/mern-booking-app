@@ -15,5 +15,6 @@ router.get(
   verifyTokenMiddleware,
   userController.verifyToken
 );
+router.get('/me', verifyTokenMiddleware, userController.getUserById);
 
 export default router;

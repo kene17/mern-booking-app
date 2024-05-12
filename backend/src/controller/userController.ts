@@ -3,6 +3,20 @@ import User from '../models/user';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 
+const getUserById = async (req: Request, res: Response) => {
+  const userId = req.userId;
+  try {
+    //get user and remove password
+    const user = await User.findById(userId).select('-password');
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.json(user);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: 'Something went wrong' });
+  }
+};
 const createNewUser = async (req: Request, res: Response) => {
   try {
     let user = await User.findOne({ email: req.body.email });
@@ -74,4 +88,4 @@ const verifyToken = (req: Request, res: Response) => {
   res.status(200).send({ userId: req.userId });
 };
 
-export default { createNewUser, loginUser, verifyToken, logout };
+export default { createNewUser, loginUser, verifyToken, logout, getUserById };
