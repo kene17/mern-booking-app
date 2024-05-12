@@ -3,6 +3,7 @@ import cors from 'cors';
 import 'dotenv/config';
 import userRoutes from './routes/userRoutes';
 import hotelRoutes from './routes/hotelsRoutes';
+import bookingRoutes from './routes/my-bookings';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import path from 'path';
@@ -35,6 +36,7 @@ app.use(express.static(path.join(__dirname, '../../frontend/dist')));
 app.use('/api/auth', userRoutes);
 app.use('/api/my-hotels', myHotelRoutes);
 app.use('/api/hotels', hotelRoutes);
+app.use('/api/my-bookings', bookingRoutes);
 
 //catch all routes
 app.get('*', (req: Request, res: Response) => {
