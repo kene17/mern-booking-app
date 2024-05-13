@@ -149,6 +149,16 @@ const validatePaymentAndUpdateBookings = async (
     res.status(500).json({ message: 'Something went wrong' });
   }
 };
+
+const getAllHotels = async (req: Request, res: Response) => {
+  try {
+    const hotels = await Hotel.find().sort('-lastUpdated');
+    res.json(hotels);
+  } catch (error) {
+    console.log('error', error);
+    res.status(500).json({ message: 'Error fetching hotels' });
+  }
+};
 const constructSearchQuery = (queryParams: any) => {
   let constructedQuery: any = {};
 
@@ -209,4 +219,5 @@ export default {
   FetchHotelById,
   stripeIntent,
   validatePaymentAndUpdateBookings,
+  getAllHotels,
 };

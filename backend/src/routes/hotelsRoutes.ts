@@ -21,4 +21,6 @@ router.post(
   verifyTokenMiddleware,
   hotelFeatureController.validatePaymentAndUpdateBookings
 );
+
+router.get('/', hotelFeatureController.getAllHotels);
 export default router;
